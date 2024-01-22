@@ -12,14 +12,12 @@ Vagrant.configure("2") do |config|
     vb.cpus = 4
   end
 
-  config.vm.provision "shell", name: "bat", privileged: false, inline:<<-TEST
+  config.vm.provision "shell", name: "dotfiles", privileged: false, inline:<<-DOTFILES
 
-  whoami
-  pwd
-  echo hello world bat
-  echo alias bat="batcat" >> .bashrc
+    echo alias bat="batcat" >> /home/vagrant/.bashrc
+    sudo touch /home/vagrant/.hushlogin
 
-TEST
+  DOTFILES
 
   config.vm.provision "shell", path: "files/install.nginx.sh"
   config.vm.provision "shell", path: "files/disable.banner.sh"
