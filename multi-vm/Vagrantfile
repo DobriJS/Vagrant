@@ -9,10 +9,22 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "db" do |db|
       db.vm.box = "centos/7"
+      db.vm.hostname = "db"
     end
 
     config.vm.define "cache" do |cache|
       cache.vm.box = "ubuntu/kinetic64"
+      cache.vm.hostname = "cache"
+    end
+
+    (1..3).each do |index|
+      config.vm.define "server#{index}" do |server|
+        server.vm.hostname = "server#{index}"
+
+        server.vm.provider "virtualbox" do |vb|
+          vb.name = "svr#{index}"
+        end
+      end
     end
 
   end
